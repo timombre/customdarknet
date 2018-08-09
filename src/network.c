@@ -726,15 +726,16 @@ void free_network(network *net)
     if(net->input_gpu) cuda_free(net->input_gpu);
     if(net->truth_gpu) cuda_free(net->truth_gpu);
 #endif
+
     if(net->workspace_size){
 #ifdef GPU
-    if(net->gpu_index >= 0){
-        cuda_free(net->workspace);
-    }else {
-        free(net->workspace);
-    }
+            if(net->gpu_index >= 0){
+                cuda_free(net->workspace);
+            }else {
+                free(net->workspace);
+            }
 #else
-    free(net->workspace);
+            free(net->workspace);
 #endif
     }
     free(net);
